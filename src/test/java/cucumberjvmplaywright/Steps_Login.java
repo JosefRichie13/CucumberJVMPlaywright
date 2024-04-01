@@ -58,4 +58,16 @@ public class Steps_Login {
         }
     }
 
+    @Then("I should see the login error message {string}")
+    public void shouldSeeTheLoginErrorMessage(String message){
+        assertTrue(driverMethods.getTextFromElement(selectors.errorMessage).contains(message));
+    }
+
+    @When("I logout of the webpage")
+    public void iLogoutOfTheWebpage() throws InterruptedException {
+        driverMethods.clickButton(selectors.menu);
+        Thread.sleep(5000);
+        driverMethods.clickButton(selectors.logoutButton);
+    }
+
 }
