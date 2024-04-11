@@ -26,5 +26,17 @@ public class Selectors {
     String continueButton = "#continue";
     String finishButton = "#finish";
     String checkoutBanner = ".complete-header";
+    String taxCalculated = ".summary_tax_label";
+    String subtotal = ".summary_subtotal_label";
+    String fullTotal = "div[class*=summary_total_label]";
+    String priceList = ".inventory_item_price";
+    String itemNumberInCart = ".shopping_cart_badge";
+    String productSort = ".product_sort_container";
+    String productList = ".inventory_item_name";
+    String footer = ".footer";
+    String footerTwitter = ".social_twitter a";
+    String footerFacebook = ".social_facebook a";
+    String footerLinkedin = ".social_linkedin a";
+
 
 }

@@ -4,6 +4,9 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
 
 public class Steps_ProductCheckout {
@@ -60,5 +63,27 @@ public class Steps_ProductCheckout {
     @Then("I should see {string} after the order is placed")
     public void seeMessageAfterOrderPlacement(String message){
         assertEquals(driverMethods.getTextFromElement(selectors.checkoutBanner), message);
+    }
+
+    @Then("I should see the tax calculated at 8 percent")
+    public void verifyTheTaxCalculation() {
+        float taxCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.taxCalculated).replaceAll("[^\\d.]", ""));
+        float taxCalculatedByCODE = Math.round(Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", "")) * 0.08 * 100f) / 100f;
+        assertEquals(taxCalculatedByAPP, taxCalculatedByCODE, 0);
+
+        float totalCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.fullTotal).replaceAll("[^\\d.]", ""));
+        float totalCalculatedByCODE = Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", "")) + taxCalculatedByAPP;
+        assertEquals(totalCalculatedByAPP, totalCalculatedByCODE, 0);
+    }
+
+    @Then("I should see the individual items total correctly")
+    public void verifyIndividualItemsTotal(){
+        List<String> individualPrices = driverMethods.getAllTextFromAListOfElements(selectors.priceList);
+        List<String> individualPricesInFloatWithoutSign = individualPrices.stream().map(s -> s.substring(1)).collect(Collectors.toList());
+        float sumCalculatedByCODE = individualPricesInFloatWithoutSign.stream().map(Float::valueOf).reduce(0f, Float::sum);
+
+        float sumCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", ""));
+
+        assertEquals(sumCalculatedByCODE, sumCalculatedByAPP, 0);
     }
 }
