@@ -40,4 +40,10 @@ public class Driver {
         return Hooks.page.url();
     }
 
+    public String getURLFromANewTab(String buttonToBeClicked){
+        return Hooks.page.waitForPopup(() -> {
+            clickButton(buttonToBeClicked);
+        }).url();
+    }
+
 }

@@ -2,8 +2,6 @@ package cucumberjvmplaywright;
 
 public class Selectors {
 
-    String webpageText2 = "a .gb_Kd";
-
     String userName = "#user-name";
     String password = "#password";
     String loginButton = "#login-button";
