@@ -65,6 +65,15 @@ public class Steps_ProductCheckout {
         assertEquals(driverMethods.getTextFromElement(selectors.checkoutBanner), message);
     }
 
+    /*
+    We get the Tax shown in the UI, extract the number, convert it into float and store it in a variable, taxCalculatedByAPP
+    We get the non taxed sum shown in the UI, extract the number, convert into float, multiple it by 0.08 (8%), round the result off to 2 and store it in a variable, taxCalculatedByCODE
+    Then we check if both taxCalculatedByAPP and taxCalculatedByCODE are equal.
+
+    We get the total shown in the UI, extract the number, convert it into float and store it in a variable, totalCalculatedByAPP
+    We get the non tax added total shown in the UI, extract the number, convert into float, add the tax calculated (taxCalculatedByCODE) and store it in a variable, totalCalculatedByCODE
+    Then we check if both totalCalculatedByAPP and totalCalculatedByCODE are equal.
+    */
     @Then("I should see the tax calculated at 8 percent")
     public void verifyTheTaxCalculation() {
         float taxCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.taxCalculated).replaceAll("[^\\d.]", ""));
@@ -76,6 +85,12 @@ public class Steps_ProductCheckout {
         assertEquals(totalCalculatedByAPP, totalCalculatedByCODE, 0);
     }
 
+    /*
+    We get the individual prices into an array, individualPrices
+    We remove the $ sign, convert the array elements into float and sum it. Storing it in a variable, sumCalculatedByCODE
+    We get the total displayed in the UI, extract the number, convert into float and store it in a variable, sumCalculatedByAPP
+    Then we check if sumCalculatedByCODE and sumCalculatedByAPP are equal
+    */
     @Then("I should see the individual items total correctly")
     public void verifyIndividualItemsTotal(){
         List<String> individualPrices = driverMethods.getAllTextFromAListOfElements(selectors.priceList);
